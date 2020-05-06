@@ -1,4 +1,5 @@
 import React,{useEffect, useState} from 'react';
+import Recipe from './Recipe';
 import './App.css';
 
 const App = () => {
@@ -6,16 +7,20 @@ const App = () => {
   const APP_ID = "0992780d";
   const APP_KEY = "5e5d73059b0a4681aa46832ad940e2e7";
 
+  const [recipes, setRecipes] = useState([]);
+
   useEffect( () => {
     getRecipes();
   }, []);
 
   const getRecipes = async () => {
-    const response = await fetch(`https://api.edamam.com/search?q=chicken&app_id=${APP_ID}&app_key=${APP_KEY}`)
+    const response = await fetch(
+      `https://api.edamam.com/search?q=chicken&app_id=${APP_ID}&app_key=${APP_KEY}`
+    );
     const data = await response.json();
-    console.log(data);
-
-  }
+      setRecipes(data.hits);
+      console.log(data.hits);
+  };
 
   return(
     <div className="App">
@@ -25,6 +30,14 @@ const App = () => {
           Search
         </button>
       </form>
+      {recipes.map(recipe => (
+        <Recipe 
+          key={recipe.recipe.label}
+          title={recipe.recipe.label} 
+          calories={recipe.recipe.calories} 
+          image={recipe.recipe.image}
+        />
+      ))}
     </div>
   );
 }
