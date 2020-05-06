@@ -1,5 +1,5 @@
 # React Recipe App
-Simple recipe app in React to search for 
+Simple recipe app in React to search for recipes with your igredients
 
 ## Installation
 git clone
